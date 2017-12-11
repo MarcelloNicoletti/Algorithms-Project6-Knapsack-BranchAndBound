@@ -11,20 +11,22 @@ public class Pro6 {
         int maxWeight = file.nextInt();
         List<Good> goods = getGoods(file);
 
-        List<Good> inKanpsack = knapsack(goods, maxWeight);
-        int bestProfit = inKanpsack.stream().mapToInt(Good::getProfit).sum();
+        List<Good> inKnapsack = knapsack(goods, maxWeight);
+        int bestProfit = inKnapsack.stream().mapToInt(Good::getProfit).sum();
 
         System.out.printf("The best profit is %d from [%s].%n", bestProfit,
-            goods.stream().map(Good::getName).collect(
+            inKnapsack.stream().map(Good::getName).collect(
                 Collectors.joining(", ")));
     }
 
     private static List<Good> knapsack (List<Good> goods, int maxWeight) {
-        PriorityQueue<KnapsackNode> nodes = new PriorityQueue<>();
+        PriorityQueue<KnapsackNode> nodes = new PriorityQueue<>(
+            Comparator.comparingInt(KnapsackNode::getBoundProfit));
 
-        KnapsackNode firstNode = new KnapsackNode(1, getBound(goods,
-            maxWeight, 0, 0), -1, new ArrayList<>());
-        nodes.add(firstNode);
+        int nodeCount = 0;
+        int bestProfit = 0;
+        nodes.add(new KnapsackNode(++nodeCount, getBound(goods,maxWeight,
+            0, 0), 0, new ArrayList<>()));
 
         do {
             KnapsackNode current = nodes.poll();
@@ -34,7 +36,7 @@ public class Pro6 {
             }
         } while (nodes.size() > 1);
 
-        return null;
+        return new ArrayList<>();
     }
 
     private static int getBound (List<Good> goods, int maxWeight,
