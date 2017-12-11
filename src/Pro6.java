@@ -23,6 +23,18 @@ public class Pro6 {
     private static List<Good> knapsack (List<Good> goods, int maxWeight) {
         PriorityQueue<KnapsackNode> nodes = new PriorityQueue<>();
 
+        KnapsackNode firstNode = new KnapsackNode(1, getBound(goods,
+            maxWeight, 0, 0), -1, new ArrayList<>());
+        nodes.add(firstNode);
+
+        do {
+            KnapsackNode current = nodes.poll();
+            System.out.printf("Exploring node %s", current.toString());
+            if (current.level >= goods.size() - 1) {
+                return current.goodsContained;
+            }
+        } while (nodes.size() > 1);
+
         return null;
     }
 
