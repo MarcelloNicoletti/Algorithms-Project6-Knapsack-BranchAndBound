@@ -26,6 +26,28 @@ public class Pro6 {
         return null;
     }
 
+    private static int getBound (List<Good> goods, int maxWeight,
+        int startingWeight, int startingProfit) {
+        int weightTotal = startingWeight;
+        int boundTotal = startingProfit;
+        for (Good good : goods) {
+            int weightRemaining = maxWeight - weightTotal;
+            if (weightRemaining > 0) {
+                if (weightRemaining >= good.getWeight()) {
+                    weightTotal += good.getWeight();
+                    boundTotal += good.getProfit();
+                } else {
+                    weightTotal += good.getWeight();
+                    boundTotal += weightRemaining * good.getScore();
+                }
+            } else {
+                break;
+            }
+        }
+
+        return boundTotal;
+    }
+
     private static List<Good> getGoods (Scanner file) {
         List<Good> goods;
         int numItems = file.nextInt();
