@@ -9,7 +9,7 @@ public class Pro6 {
         Scanner file = new Scanner(fis);
 
         int maxWeight = file.nextInt();
-        List<Good> goods = getGoods(file);
+        List<Good> goods = getGoodsFromFile(file);
 
         System.out.println();
         List<Good> inKnapsack = knapsack(goods, maxWeight);
@@ -28,7 +28,7 @@ public class Pro6 {
 
         int nodeCount = 0;
         KnapsackNode firstNode = new KnapsackNode(++nodeCount,
-            getBound(goods, maxWeight,0, 0), 0, new ArrayList<>());
+            calculateBound(goods, maxWeight,0, 0), 0, new ArrayList<>());
         KnapsackNode bestNode = firstNode;
         nodes.add(firstNode);
 
@@ -53,12 +53,12 @@ public class Pro6 {
 
             KnapsackNode leftNode = getLeftNode(maxWeight, ++nodeCount,
                 current, goodsRemaining);
-            bestNode = overloadedMethod(leftNode, maxWeight, nodes, bestNode);
+            bestNode = addOrPruneNode(leftNode, maxWeight, nodes, bestNode);
 
             KnapsackNode rightNode =
                 getRightNode(goods.get(current.getLevel()), maxWeight,
                     ++nodeCount, current, goodsRemaining);
-            bestNode = overloadedMethod(rightNode, maxWeight, nodes, bestNode);
+            bestNode = addOrPruneNode(rightNode, maxWeight, nodes, bestNode);
 
             System.out.printf("Note best profit so far is %d%n%n", bestNode
                 .getRealProfit());
@@ -70,7 +70,7 @@ public class Pro6 {
 
     private static KnapsackNode getRightNode (Good good, int maxWeight,
         int nodeCount, KnapsackNode current, List<Good> goodsRemaining) {
-        double rightBound = getBound(new ArrayList<>(goodsRemaining),
+        double rightBound = calculateBound(new ArrayList<>(goodsRemaining),
             maxWeight, current.getRealWeight(), current.getRealProfit());
         List<Good> rightGoods = new ArrayList<>(
             current.getGoodsContained());
@@ -83,7 +83,7 @@ public class Pro6 {
 
     private static KnapsackNode getLeftNode (int maxWeight, int nodeCount,
         KnapsackNode current, List<Good> goodsRemaining) {
-        double leftBound = getBound(goodsRemaining.stream().skip(1).collect(
+        double leftBound = calculateBound(goodsRemaining.stream().skip(1).collect(
             Collectors.toList()), maxWeight, current.getRealWeight(),
             current.getRealProfit());
         List<Good> leftGoods = new ArrayList<>(current.getGoodsContained());
@@ -93,7 +93,7 @@ public class Pro6 {
         return leftNode;
     }
 
-    private static KnapsackNode overloadedMethod (KnapsackNode node, int maxWeight,
+    private static KnapsackNode addOrPruneNode (KnapsackNode node, int maxWeight,
         PriorityQueue<KnapsackNode> nodes, KnapsackNode bestNode) {
         if (node.getRealWeight() < maxWeight) {
             if (node.getRealProfit() > bestNode.getRealProfit()) {
@@ -113,7 +113,7 @@ public class Pro6 {
         return bestNode;
     }
 
-    private static double getBound (List<Good> goods, int maxWeight,
+    private static double calculateBound (List<Good> goods, int maxWeight,
         int startingWeight, int startingProfit) {
         int weightTotal = startingWeight;
         double boundTotal = startingProfit;
@@ -135,7 +135,7 @@ public class Pro6 {
         return boundTotal;
     }
 
-    private static List<Good> getGoods (Scanner file) {
+    private static List<Good> getGoodsFromFile (Scanner file) {
         List<Good> goods;
         int numItems = file.nextInt();
 
