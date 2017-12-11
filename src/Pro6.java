@@ -39,8 +39,10 @@ public class Pro6 {
             if (current.getBoundProfit() <= bestNode.getRealProfit()) {
                 System.out.printf("  Pruning node because bound %.1f does not" +
                         " " +
-                        "beat known best profit of %d%n%n",
+                        "beat known best profit of %d%n",
                     current.getBoundProfit(), bestNode.getRealProfit());
+
+                printRemainingNodes(nodes);
                 continue;
             }
 
@@ -61,15 +63,22 @@ public class Pro6 {
             System.out.printf("Note best profit so far is %d%n", bestNode
                 .getRealProfit());
 
-            System.out.println("Remaining nodes:");
-            for (KnapsackNode node : nodes) {
-                System.out.printf("    %s%n", node.toString());
-            }
-            System.out.println();
+            printRemainingNodes(nodes);
         } while (nodes.size() > 0);
 
         System.out.printf("Found best node: %s%n%n", bestNode.toString());
         return bestNode.getGoodsContained();
+    }
+
+    private static void printRemainingNodes (
+        PriorityQueue<KnapsackNode> nodes) {
+        if (nodes.size() > 0) {
+            System.out.println("Remaining nodes:");
+            for (KnapsackNode node : nodes) {
+                System.out.printf("    %s%n", node.toString());
+            }
+        }
+        System.out.println();
     }
 
     private static KnapsackNode getRightNode (Good good, int maxWeight,
