@@ -14,6 +14,10 @@ public class Pro6 {
         List<Good> goods = getGoods(file);
 
         List<Good> inKanpsack = knapsack(goods, maxWeight);
+        int bestProfit = inKanpsack.stream().mapToInt(Good::getProfit).sum();
+
+        System.out.printf("The best profit is %d from %s.%n", bestProfit,
+            inKanpsack.toString());
     }
 
     private static List<Good> knapsack (List<Good> goods, int maxWeight) {
