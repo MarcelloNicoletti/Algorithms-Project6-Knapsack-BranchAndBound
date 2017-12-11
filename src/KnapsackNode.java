@@ -2,8 +2,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class KnapsackNode {
-    public List<Good> goodsContained;
-    public int nodeNumber, boundProfit, level;
+    private List<Good> goodsContained;
+    private int nodeNumber, boundProfit, level;
 
     public KnapsackNode (int nodeNumber, int boundProfit,
         int level, List<Good> goodsContained) {
@@ -13,8 +13,20 @@ public class KnapsackNode {
         this.level = level;
     }
 
+    public List<Good> getGoodsContained () {
+        return goodsContained;
+    }
+
+    public int getNodeNumber () {
+        return nodeNumber;
+    }
+
     public int getBoundProfit () {
-        return this.boundProfit;
+        return boundProfit;
+    }
+
+    public int getLevel () {
+        return level;
     }
 
     public int getRealProfit () {
@@ -33,9 +45,9 @@ public class KnapsackNode {
             (Good::getName).collect(Collectors.joining(", ")))
             .append("], ");
         sb.append("level: ").append(level).append(", ");
-        sb.append("profit: ").append(this.getRealProfit()).append(", ");
-        sb.append("weight: ").append(this.getRealWeight()).append(", ");
-        sb.append("bound: ").append(this.getBoundProfit());
+        sb.append("profit: ").append(getRealProfit()).append(", ");
+        sb.append("weight: ").append(getRealWeight()).append(", ");
+        sb.append("bound: ").append(getBoundProfit());
         return sb.toString();
     }
 }

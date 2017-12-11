@@ -31,9 +31,9 @@ public class Pro6 {
 
         do {
             KnapsackNode current = nodes.poll();
-            System.out.printf("Exploring node %s", current.toString());
-            if (current.level >= goods.size() - 1) {
-                return current.goodsContained;
+            System.out.printf("Exploring %s%n", current.toString());
+            if (current.getLevel() >= goods.size() - 1) {
+                return current.getGoodsContained();
             }
         } while (nodes.size() > 1);
 
