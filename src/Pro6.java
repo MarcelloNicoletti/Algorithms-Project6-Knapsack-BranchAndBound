@@ -37,15 +37,11 @@ public class Pro6 {
             System.out.printf("Exploring %s%n", current.toString());
 
             if (current.getBoundProfit() <= bestNode.getRealProfit()) {
-                System.out.printf("Pruning node because bound %f does not " +
+                System.out.printf("  Pruning node because bound %.1f does not" +
+                        " " +
                         "beat known best profit of %d%n%n",
                     current.getBoundProfit(), bestNode.getRealProfit());
-                break;
-            }
-            if (current.getLevel() >= goods.size()) {
-                System.out.printf("Node %s can't have children.%n",
-                    current.toString());
-                break;
+                continue;
             }
 
             List<Good> goodsRemaining = goods.stream().skip(current.getLevel
@@ -53,15 +49,23 @@ public class Pro6 {
 
             KnapsackNode leftNode = getLeftNode(maxWeight, ++nodeCount,
                 current, goodsRemaining);
-            bestNode = addOrPruneNode(leftNode, maxWeight, nodes, bestNode);
+            bestNode = addOrPruneNode(leftNode, maxWeight, nodes, bestNode,
+                goods.size());
 
             KnapsackNode rightNode =
                 getRightNode(goods.get(current.getLevel()), maxWeight,
                     ++nodeCount, current, goodsRemaining);
-            bestNode = addOrPruneNode(rightNode, maxWeight, nodes, bestNode);
+            bestNode = addOrPruneNode(rightNode, maxWeight, nodes, bestNode,
+                goods.size());
 
-            System.out.printf("Note best profit so far is %d%n%n", bestNode
+            System.out.printf("Note best profit so far is %d%n", bestNode
                 .getRealProfit());
+
+            System.out.println("Remaining nodes:");
+            for (KnapsackNode node : nodes) {
+                System.out.printf("    %s%n", node.toString());
+            }
+            System.out.println();
         } while (nodes.size() > 0);
 
         System.out.printf("Found best node: %s%n%n", bestNode.toString());
@@ -94,18 +98,24 @@ public class Pro6 {
     }
 
     private static KnapsackNode addOrPruneNode (KnapsackNode node, int maxWeight,
-        PriorityQueue<KnapsackNode> nodes, KnapsackNode bestNode) {
+        PriorityQueue<KnapsackNode> nodes, KnapsackNode bestNode,
+        int maxLevel) {
         if (node.getRealWeight() < maxWeight) {
             if (node.getRealProfit() > bestNode.getRealProfit()) {
                 bestNode = node;
             }
-            nodes.add(node);
-            System.out.println("    Exploring further.");
+            if (node.getLevel() < maxLevel) {
+                nodes.add(node);
+                System.out.println("    Exploring further.");
+            } else {
+                System.out.println("    No more levels. No further " +
+                    "exploration");
+            }
         } else if (node.getRealWeight() == maxWeight) {
             if (node.getRealProfit() > bestNode.getRealProfit()) {
                 bestNode = node;
             }
-            System.out.println("    Weight equals max exactly. No Further " +
+            System.out.println("    Weight equals max exactly. No further " +
                 "exploration.");
         } else {
             System.out.println("    Node over max weight. Pruning this node");
