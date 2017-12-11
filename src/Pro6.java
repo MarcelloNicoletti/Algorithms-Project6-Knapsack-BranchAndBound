@@ -2,6 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class Pro6 {
@@ -11,6 +12,14 @@ public class Pro6 {
 
         int maxWeight = file.nextInt();
         List<Good> goods = getGoods(file);
+
+        List<Good> inKanpsack = knapsack(goods, maxWeight);
+    }
+
+    private static List<Good> knapsack (List<Good> goods, int maxWeight) {
+        PriorityQueue<KnapsackNode> nodes = new PriorityQueue<>();
+
+        return null;
     }
 
     private static List<Good> getGoods (Scanner file) {
