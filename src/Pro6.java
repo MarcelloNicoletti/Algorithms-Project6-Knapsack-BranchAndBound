@@ -20,8 +20,10 @@ public class Pro6 {
     }
 
     private static List<Good> knapsack (List<Good> goods, int maxWeight) {
-        PriorityQueue<KnapsackNode> nodes = new PriorityQueue<>(
-            Comparator.comparingInt(KnapsackNode::getBoundProfit));
+        PriorityQueue<KnapsackNode> nodes =
+            new PriorityQueue<>((KnapsackNode n1, KnapsackNode n2) ->
+                (int)((n2.getBoundProfit() - n1.getBoundProfit()) /
+                    Math.abs((n2.getBoundProfit() - n1.getBoundProfit()))));
 
         int nodeCount = 0;
         int bestProfit = 0;

@@ -3,9 +3,10 @@ import java.util.stream.Collectors;
 
 public class KnapsackNode {
     private List<Good> goodsContained;
-    private int nodeNumber, boundProfit, level;
+    private int nodeNumber, level;
+    private double boundProfit;
 
-    public KnapsackNode (int nodeNumber, int boundProfit,
+    public KnapsackNode (int nodeNumber, double boundProfit,
         int level, List<Good> goodsContained) {
         this.nodeNumber = nodeNumber;
         this.goodsContained = goodsContained;
@@ -21,7 +22,7 @@ public class KnapsackNode {
         return nodeNumber;
     }
 
-    public int getBoundProfit () {
+    public double getBoundProfit () {
         return boundProfit;
     }
 
