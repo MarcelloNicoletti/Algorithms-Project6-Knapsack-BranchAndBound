@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class KnapsackNode {
     public List<Good> goodsContained;
@@ -28,7 +29,9 @@ public class KnapsackNode {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Node ").append(nodeNumber).append(": ");
-        sb.append("items: [").append(goodsContained.toString()).append("], ");
+        sb.append("items: [").append(goodsContained.stream().map
+            (Good::getName).collect(Collectors.joining(", ")))
+            .append("], ");
         sb.append("level: ").append(level).append(", ");
         sb.append("profit: ").append(this.getRealProfit()).append(", ");
         sb.append("weight: ").append(this.getRealWeight()).append(", ");

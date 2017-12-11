@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Pro6 {
     public static void main (String[] args) throws FileNotFoundException {
@@ -16,8 +17,9 @@ public class Pro6 {
         List<Good> inKanpsack = knapsack(goods, maxWeight);
         int bestProfit = inKanpsack.stream().mapToInt(Good::getProfit).sum();
 
-        System.out.printf("The best profit is %d from %s.%n", bestProfit,
-            inKanpsack.toString());
+        System.out.printf("The best profit is %d from [%s].%n", bestProfit,
+            goods.stream().map(Good::getName).collect(
+                Collectors.joining(", ")));
     }
 
     private static List<Good> knapsack (List<Good> goods, int maxWeight) {
