@@ -33,7 +33,7 @@ public class Good {
 
     @Override
     public String toString () {
-        return String.format("(%s, p=%d, w=%d, p/w=%.2f)", this.name,
-            this.profit, this.weight, this.getScore());
+        return String.format("%s:\t%d\t%d\t%.2f", this.name, this.profit,
+            this.weight, this.getScore());
     }
 }

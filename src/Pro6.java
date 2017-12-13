@@ -9,6 +9,7 @@ public class Pro6 {
         Scanner file = new Scanner(fis);
 
         int maxWeight = file.nextInt();
+        System.out.printf("Capacity of the knapsack: %d%n", maxWeight);
         List<Good> goods = getGoodsFromFile(file);
 
         System.out.println();
@@ -155,6 +156,7 @@ public class Pro6 {
     }
 
     private static List<Good> getGoodsFromFile (Scanner file) {
+        System.out.println("Items are: ");
         List<Good> goods;
         int numItems = file.nextInt();
 
