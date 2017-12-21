@@ -22,7 +22,7 @@ public class Good {
     }
 
     public double getScore () {
-        return (double) profit / (double) weight;
+        return (double)profit / (double)weight;
     }
 
     public int compareTo (Good other) {

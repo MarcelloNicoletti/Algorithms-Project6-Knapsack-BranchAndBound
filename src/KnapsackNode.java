@@ -38,8 +38,22 @@ public class KnapsackNode {
         return goodsContained.stream().mapToInt(Good::getWeight).sum();
     }
 
+    public int compareTo (KnapsackNode other) {
+        double difference = other.getBoundProfit() - this.getBoundProfit();
+
+        if (difference == 0.0) {
+            return 0;
+        }
+
+        // The compare to spec just says negative, zero, and positive as the
+        // possibilities. This means I don't have to return the actual
+        // difference. A number divided by its own absolute value will be -1
+        // or +1 and +/-1 is definitely in the safe range to downcast to int.
+        return (int)(difference / Math.abs(difference));
+    }
+
     @Override
-    public String toString() {
+    public String toString () {
         StringBuilder sb = new StringBuilder();
         sb.append("<Node ").append(nodeNumber).append(": ");
         sb.append("items: [").append(goodsContained.stream().map
