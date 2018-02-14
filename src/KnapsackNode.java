@@ -54,15 +54,13 @@ public class KnapsackNode {
 
     @Override
     public String toString () {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<Node ").append(nodeNumber).append(": ");
-        sb.append("items: [").append(goodsContained.stream().map
-            (Good::getName).collect(Collectors.joining(", ")))
-            .append("], ");
-        sb.append("level: ").append(level).append(", ");
-        sb.append("profit: ").append(getRealProfit()).append(", ");
-        sb.append("weight: ").append(getRealWeight()).append(", ");
-        sb.append("bound: ").append(getBoundProfit()).append(">");
-        return sb.toString();
+        return "<Node " + nodeNumber + ": " +
+            "items: [" + goodsContained.stream().map
+            (Good::getName).collect(Collectors.joining(", ")) +
+            "], " +
+            "level: " + level + ", " +
+            "profit: " + getRealProfit() + ", " +
+            "weight: " + getRealWeight() + ", " +
+            "bound: " + getBoundProfit() + ">";
     }
 }
